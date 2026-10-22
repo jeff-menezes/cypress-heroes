@@ -25,7 +25,7 @@ describe('template spec', () => {
   }
   
   xit('success login', () => {
-    cy.visit('http://localhost:3000/')
+    cy.visit('/')
     cy.get("nav").click()
     cy.get(selectorsList.usernameField).type(userData.userSuccess.userEmail)
     cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
@@ -33,7 +33,7 @@ describe('template spec', () => {
   })
 
 xit('unsuccess login', () => {
-    cy.visit('http://localhost:3000/')
+    cy.visit('/')
     cy.get("nav").click()
     cy.get(selectorsList.usernameField).type(userData.userFail.userEmail)
     cy.get(selectorsList.passwordField).type(userData.userFail.password)
@@ -42,7 +42,7 @@ xit('unsuccess login', () => {
   })
 
   xit('success login com listagem de heróis', () => {
-    cy.visit('http://localhost:3000/')
+    cy.visit('/')
     cy.get("nav").click()
     cy.get(selectorsList.usernameField).type(userData.userSuccess.userEmail)
     cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
@@ -60,7 +60,7 @@ xit('unsuccess login', () => {
   })
 
 it('create new hero', () => {
-    cy.visit('http://localhost:3000/')
+    cy.visit('/')
     cy.get("nav").click()
     cy.get(selectorsList.usernameField).type(userData.userSuccessAdm.userEmailAdm)
     cy.get(selectorsList.passwordField).type(userData.userSuccessAdm.password)
