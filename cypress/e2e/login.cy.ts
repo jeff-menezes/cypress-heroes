@@ -3,30 +3,27 @@ import userData from '../fixtures/userData.json'
 describe('template spec', () => {
   
   const selectorsList = {
+    formLoginButton: "nav",
     usernameField: "[data-cy='email']",
     passwordField: "[data-cy='password']",
-    loginButton: "form button"
+    loginButton: "form button",
+
+    newHeroButton: "[href='/heroes/new']",
+    heroPageCheck: ".py-4",
+    heroCreateName: '[data-cy="nameInput"]',
+    heroCreatePrice: '[data-cy="priceInput"]',
+    heroCreateFans: '[data-cy="fansInput"]',
+    heroCreateSaves: '[data-cy="savesInput"]',
+    heroSelectorPower: '[data-cy="powersSelect"]',
+    heroInputImage: 'input[type="file"]',
+    heroCreateButton: "form button"
+
   } 
 
-  const userData = {
-    userSuccessAdm: {
-      userEmailAdm: "admin@test.com",
-      password: "test123"
-    },
-    userSuccess: {
-      userEmail: "test@test.com",
-      password: "test123"
-    },
-    userFail: {
-      userEmail: "fail@test.com",
-      password: "test123"
-    }
-
-  }
   
   xit('success login', () => {
     cy.visit('/')
-    cy.get("nav").click()
+    cy.get(selectorsList.formLoginButton).click()
     cy.get(selectorsList.usernameField).type(userData.userSuccess.userEmail)
     cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
     cy.get(selectorsList.loginButton).click()
@@ -34,7 +31,7 @@ describe('template spec', () => {
 
 xit('unsuccess login', () => {
     cy.visit('/')
-    cy.get("nav").click()
+    cy.get(selectorsList.formLoginButton).click()
     cy.get(selectorsList.usernameField).type(userData.userFail.userEmail)
     cy.get(selectorsList.passwordField).type(userData.userFail.password)
     cy.get(selectorsList.loginButton).click()
@@ -43,7 +40,7 @@ xit('unsuccess login', () => {
 
   xit('success login com listagem de heróis', () => {
     cy.visit('/')
-    cy.get("nav").click()
+    cy.get(selectorsList.formLoginButton).click()
     cy.get(selectorsList.usernameField).type(userData.userSuccess.userEmail)
     cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
     cy.get(selectorsList.loginButton).click()
@@ -61,11 +58,20 @@ xit('unsuccess login', () => {
 
 it('create new hero', () => {
     cy.visit('/')
-    cy.get("nav").click()
+    cy.get(selectorsList.formLoginButton).click()
     cy.get(selectorsList.usernameField).type(userData.userSuccessAdm.userEmailAdm)
     cy.get(selectorsList.passwordField).type(userData.userSuccessAdm.password)
     cy.get(selectorsList.loginButton).click()
-    cy.get("[href='/heroes/new']").click()
+    cy.get(selectorsList.newHeroButton).click()
+    cy.get(selectorsList.heroPageCheck).contains('Avatar')
+    cy.get(selectorsList.heroCreateName).type("Jeff")
+    cy.get(selectorsList.heroCreatePrice).type("$30")
+    cy.get(selectorsList.heroCreateFans).type("100")
+    cy.get(selectorsList.heroCreateSaves).type("50")
+    cy.get(selectorsList.heroSelectorPower).select('Invisibility')
+    cy.get(selectorsList.heroInputImage).selectFile('cypress/images/jeff-image.png');
+    cy.get(selectorsList.heroCreateButton).click()
+
 })
 
 
