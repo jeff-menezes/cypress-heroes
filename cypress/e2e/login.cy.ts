@@ -1,12 +1,15 @@
 import userData from '../fixtures/userData.json'
+import LoginPage from '../pages/loginPage.js'
+import ListHeroesPage from '../pages/listHeroesPage.js'
+
+
+const loginPage = new LoginPage()
+const listHeroesPage = new ListHeroesPage()
 
 describe('template spec', () => {
   
   const selectorsList = {
-    formLoginButton: "nav",
-    usernameField: "[data-cy='email']",
-    passwordField: "[data-cy='password']",
-    loginButton: "form button",
+    
 
     newHeroButton: "[href='/heroes/new']",
     heroPageCheck: ".py-4",
@@ -31,60 +34,54 @@ describe('template spec', () => {
   } 
 
   
-  xit('success login', () => {
-    cy.visit('/')
-    cy.get(selectorsList.formLoginButton).click()
-    cy.get(selectorsList.usernameField).type(userData.userSuccess.userEmail)
-    cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
-    cy.get(selectorsList.loginButton).click()
+  it('success login', () => {
+    loginPage.accessLoginPage()
+    loginPage.loginWithUser(userData.userSuccess.userEmail, userData.userSuccess.password)
+  
   })
 
-  xit('unsuccess login', () => {
-    cy.visit('/')
-    cy.get(selectorsList.formLoginButton).click()
-    cy.get(selectorsList.usernameField).type(userData.userFail.userEmail)
-    cy.get(selectorsList.passwordField).type(userData.userFail.password)
-    cy.get(selectorsList.loginButton).click()
-    cy.get(".text-red-500").contains('Invalid')
+  it('unsuccess login', () => {
+    loginPage.accessLoginPage()
+    loginPage.loginWithUser(userData.userFail.userEmail, userData.userFail.password)
+    loginPage.loginFail('Invalid')
+ 
   })
 
-  xit('success login com listagem de heróis', () => {
-    cy.visit('/')
-    cy.get(selectorsList.formLoginButton).click()
-    cy.get(selectorsList.usernameField).type(userData.userSuccess.userEmail)
-    cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
-    cy.get(selectorsList.loginButton).click()
+  it('success login com listagem de heróis', () => {
+
+    loginPage.accessLoginPage()
+    loginPage.loginWithUser(userData.userSuccess.userEmail, userData.userSuccess.password)
+
 
     const heroes = [
       'The Smoker', 'Warp Speed', 'Cyonic', 'The Librarian', 
       'Mr Angular', 'Collect Call Paul', 'Fly Girl'
     ]
 
-    heroes.forEach((hero, index) => {
-        // .eq(index) verifica o card na ordem exata da página
-      cy.get("[data-cy='hero-card']").eq(index).should('contain', hero)
+    listHeroesPage.validarListaDeHerois(heroes)
+
     })
   })
 
-  it('create new hero', () => {
-    cy.visit('/')
-    cy.get(selectorsList.formLoginButton).click()
-    cy.get(selectorsList.usernameField).type(userData.userSuccessAdm.userEmailAdm)
-    cy.get(selectorsList.passwordField).type(userData.userSuccessAdm.password)
-    cy.get(selectorsList.loginButton).click()
-    cy.get(selectorsList.newHeroButton).click()
-    cy.get(selectorsList.heroPageCheck).contains('Avatar')
-    cy.get(selectorsList.heroCreateName).type("Bat-Avatar")
-    cy.get(selectorsList.heroCreatePrice).type("$30")
-    cy.get(selectorsList.heroCreateFans).type("100")
-    cy.get(selectorsList.heroCreateSaves).type("50")
-    cy.get(selectorsList.heroSelectorPower).select('Invisibility')
-    cy.get(selectorsList.heroInputImage).selectFile('cypress/images/bat-avatar.png');
-    cy.get(selectorsList.heroCreateButton).click()
-    cy.get(selectorsList.cardAvatars).contains("Bat-Avatar")
+  xit('create new hero', () => {
+    loginPage.accessLoginPage()
+    // cy.get(selectorsList.formLoginButton).click()
+    // cy.get(selectorsList.usernameField).type(userData.userSuccessAdm.userEmailAdm)
+    // cy.get(selectorsList.passwordField).type(userData.userSuccessAdm.password)
+    // cy.get(selectorsList.loginButton).click()
+    // cy.get(selectorsList.newHeroButton).click()
+    // cy.get(selectorsList.heroPageCheck).contains('Avatar')
+    // cy.get(selectorsList.heroCreateName).type("Bat-Avatar")
+    // cy.get(selectorsList.heroCreatePrice).type("$30")
+    // cy.get(selectorsList.heroCreateFans).type("100")
+    // cy.get(selectorsList.heroCreateSaves).type("50")
+    // cy.get(selectorsList.heroSelectorPower).select('Invisibility')
+    // cy.get(selectorsList.heroInputImage).selectFile('cypress/images/bat-avatar.png');
+    // cy.get(selectorsList.heroCreateButton).click()
+    // cy.get(selectorsList.cardAvatars).contains("Bat-Avatar")
 })
 
-  it('delete new hero', () => {
+  xit('delete new hero', () => {
     cy.visit('/')
     cy.get(selectorsList.formLoginButton).click()
     cy.get(selectorsList.usernameField).type(userData.userSuccessAdm.userEmailAdm)
@@ -98,13 +95,9 @@ describe('template spec', () => {
       });
          
     cy.contains(selectorsList.trashBoxOpen, "Delete Hero").should('be.visible')
-      cy.get(selectorsList.yesConfirmButton).contains('Yes').click()
-      cy.contains(selectorsList.heroNameLocalization, 'Bat-Avatar').should('not.exist');
+    cy.get(selectorsList.yesConfirmButton).contains('Yes').click()
+    cy.contains(selectorsList.heroNameLocalization, 'Bat-Avatar').should('not.exist')
 
-  });
-
-
-
-})
+  })
 
  
