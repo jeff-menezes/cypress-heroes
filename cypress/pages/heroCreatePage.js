@@ -12,6 +12,12 @@ class HeroCreatePage {
             heroInputImage: 'input[type="file"]',
             heroCreateButton: "form button",
             cardAvatars: "[data-cy='hero-card']",
+            //delete hero
+            heroNameLocalization: '[data-cy="name"]',
+            locationParents: '[data-cy="hero-card"]',
+            trashButton: '[data-cy="trash"]',
+            trashBoxOpen: ".leading-6",
+            yesConfirmButton: ".justify-end button",
 
         }
         return selectors
@@ -28,6 +34,18 @@ class HeroCreatePage {
         cy.get(this.selectorsList().heroInputImage).selectFile(image);
         cy.get(this.selectorsList().heroCreateButton).click()
         cy.get(this.selectorsList().cardAvatars).contains(confirName)
+    }
+
+    deleteHero(confirName, deleteTextConfirm, deleteButtonText) {
+        cy.contains(this.selectorsList().heroNameLocalization, confirName).parents(this.selectorsList().locationParents).within(() => {
+          cy.get('img.rounded-full').should('be.visible').and('have.attr', 'src').and('contain', '/avatar');
+          cy.get(this.selectorsList().heroNameLocalization).should('have.text', confirName);
+          cy.get(this.selectorsList().trashButton).should('be.visible').click();
+      });
+         
+        cy.contains(this.selectorsList().trashBoxOpen, deleteTextConfirm).should('be.visible')
+        cy.get(this.selectorsList().yesConfirmButton).contains(deleteButtonText).click()
+        cy.contains(this.selectorsList().heroNameLocalization, confirName).should('not.exist')
     }
 }
 
