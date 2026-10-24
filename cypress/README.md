@@ -4,7 +4,7 @@ This project utilizes Cypress to automate the End-to-End (E2E) testing of a logi
 
 Cypress is a JavaScript/TypeScript-based E2E testing framework that allows developers and QA engineers to write tests and execute them efficiently in real browsers.
 
-## 🚀 Installation
+## Installation
 
 Make sure you have [Node.js](https://nodejs.org) installed before proceeding.
 
@@ -14,7 +14,7 @@ npm install
 
 > **NOTE:** It is necessary to have node installed.
 
-## 🛠️ Running Tests
+## Running Tests
 
 ### Open the Cypress UI (Interactive Mode)
 ```bash
@@ -35,28 +35,28 @@ npx cypress run --spec "cypress/e2e/login.cy.ts"
 npx cypress run --spec "cypress/e2e/manageHero.cy.ts"
 ```
 
-## 📂 Project Structure
+## Project Structure
 
 This project strictly follows the **Page Objects Pattern (POM)** to decouple test scenarios from technical HTML selectors, making maintenance simple and efficient.
 
 ```text
 cypress/
-├── e2e/                             📂 Test Scenarios (Specs)
-│   ├── login.cy.ts                  📄 Login specs (success, failure, and list verification)
-│   └── manageHero.cy.ts             📄 Hero specs (creation and deletion flows)
+├── e2e/                             Test Scenarios (Specs)
+│   ├── login.cy.ts                  Login specs (success, failure, and list verification)
+│   └── manageHero.cy.ts             Hero specs (creation and deletion flows)
 │
-├── pages/                           📂 Page Objects (Elements & Actions)
-│   ├── loginPage.js                 📄 Login form interactions and error handling
-│   ├── listHeroesPage.js            📄 Hero dashboard and list data confirmation
-│   └── heroCreatePage.js            📄 Creation form and deletion modal workflows
+├── pages/                           Page Objects (Elements & Actions)
+│   ├── loginPage.js                 Login form interactions and error handling
+│   ├── listHeroesPage.js            Hero dashboard and list data confirmation
+│   └── heroCreatePage.js            Creation form and deletion modal workflows
 │
-├── fixtures/                        📂 Test Data Mass
-│   └── userData.json                📄 Admin, standard, and failing credentials
+├── fixtures/                        Test Data Mass
+│   └── userData.json                Admin, standard, and failing credentials
 │
-└── cypress.config.ts                ⚙️ Global Cypress configuration (BaseURL: localhost:3000)
+└── cypress.config.ts                Global Cypress configuration (BaseURL: localhost:3000)
 ```
 
-## 📋 Automated Features
+## Automated Features
 
 1. **Authentication Flow (`login.cy.ts`)**
    * Success Login.
